@@ -1,33 +1,34 @@
 class FeedbackCreator
   attr_reader :feedback
 
-  def initialize()
+  def initialize(solution)
     @feedback = []
+    @solution = solution
   end
 
-  def return_feedback(guess, secret_code)
-    puts "Beginning secret code: #{secret_code}"
+  def return_feedback(guess)
+    solution = @solution
+    puts "#{solution}"
     guess.each_with_index do |element, index|
-      if element == secret_code[index]
+      if element == solution[index]
         @feedback.push(2)
-        secret_code[index] = "Done"
-      elsif secret_code.include?(element)
+        solution[index] = "Done"
+      elsif solution.include?(element)
         @feedback.push(1)
-        secret_code[secret_code.index(element)] = "Done"
+        solution[solution.index(element)] = "Done"
       else
         @feedback.push(0)
         #secret_code[secret_code.index(element)] = "Done"
       end
     end
-  print "Secret_code: #{secret_code}\n"
-  print "Feedback: #{feedback}\n"
+  # print "Secret_code: #{solution}\n"
+  # print "Feedback: #{feedback}\n"
   @feedback.sort!.reverse!
   end
 
   def reset
     @feedback = []
   end
-
 end
 
 # def return_feedback(guess, secret_code)

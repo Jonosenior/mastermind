@@ -5,22 +5,23 @@ class Game
     user_chooses_player_type
     @solution_creator = SolutionCreator.new(@human_guesser)
     @solution = @solution_creator.solution
-    @feedback_creator = FeedbackCreator.new
+    @feedback_creator = FeedbackCreator.new(@solution)
     start_game
   end
 
   def start_game
     while @board.guesses_made < @board.max_guesses_allowed
+      if is_guess_correct? then win end
       @board.display_board
       puts "\n\n"
       @human_guesser ? new_human_guess : new_computer_guess
       retrieve_feedback
-      if is_guess_correct? then win end
       @board.update_board_history(@guess, @feedback)
       puts "Solution: #{@solution}"
       puts "Guess: #{@guess}"
-      puts "Feedback: #{@feedback}"
-      puts "Computerguesser's guesses made: #{@computerguesser.guesses_made}"
+      print @board.board_history
+      # puts "Feedback: #{@feedback}"
+      #puts "Computerguesser's guesses made: #{@computerguesser.guesses_made}"
       if !@human_guesser then computer_guesser_evaluates_feedback end
       @feedback_creator.reset
     end
@@ -29,7 +30,7 @@ class Game
 
   def computer_guesser_evaluates_feedback
     @computerguesser.remember_correct_digits(@feedback)
-    puts "Correct Digits: #{@computerguesser.correct_digits}"
+    #puts "Correct Digits: #{@computerguesser.correct_digits}"
     @computerguesser.iterate_guesses_made
     @computerguesser.reset_guess
   end
@@ -74,13 +75,13 @@ class Game
   end
 
   def retrieve_feedback
-    @feedback = @feedback_creator.return_feedback(@guess, @solution_creator.solution)
+    @feedback = @feedback_creator.return_feedback(@guess)
   end
 
   def new_human_guess
     puts "OK, now you have to make a guess."
     puts "Remember: four digits, 1-8, no duplicates.\n"
-    @guess = gets.chomp
+    @guess = gets.chomp.split("").map {|x| x.to_i}
     if !is_user_input_legitimate?(@guess)
       puts "Hey! Make a proper guess!"
       new_human_guess

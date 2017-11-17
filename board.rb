@@ -28,17 +28,18 @@ class Board
   end
 
   def create_board_history
-   @board_history = []
-   for element in 1..@max_guesses_allowed
-     @board_history.push([[0,0,0,0], ["·","·","·","·"]])
+    @board_history = []
+    for element in 1..@max_guesses_allowed
+      @board_history.push([[0,0,0,0], ["·","·","·","·"]])
    end
    @board_history
   end
 
 
-  def update_board_history(current_guess, feedback)
-    @board_history[guesses_made][0] = current_guess
-    @board_history[guesses_made][1] = feedback
+  def update_board_history(guess, feedback)
+    puts "Update board history, guesses made: #{@guesses_made}"
+    @board_history[@guesses_made][0] = guess
+    @board_history[@guesses_made][1] = feedback
     @guesses_made += 1
   end
 
