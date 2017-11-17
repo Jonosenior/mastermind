@@ -13,28 +13,33 @@ class Board
   end
 
   def display_board
-    @board_history.reverse_each do |sub_array|
-      print "Guess number: #{sub_array[0]} Guess: #{sub_array[1]} Feedback: #{sub_array[2]}\n\n"
+    i = 0
+    print "\n\n    ________________________\n"
+    print "   |            |           |\n"
+
+    12.times do
+      represent_guess = @board_history[i][0].join("")
+      represent_feedback = @board_history[i][1].join("")
+      print "   |    #{represent_guess}    |    #{represent_feedback}   |\n"
+      i+=1
     end
+    print "   |____________|___________|\n\n"
+
   end
 
   def create_board_history
-    @board_history = []
-    for element in 1..@max_guesses_allowed
-      @board_history.push([element, "_________________", "________"])
-    end
+   @board_history = []
+   for element in 1..@max_guesses_allowed
+     @board_history.push([[0,0,0,0], ["·","·","·","·"]])
+   end
+   @board_history
   end
 
-  def update_board_history_user_guess(current_guess)
-    @board_history[guesses_made][1] = current_guess
-  end
 
-  def update_board_history_feedback(feedback)
-    @board_history[guesses_made][2] = feedback
-  end
-
-  def iterate_guesses_made
-    @guesses_made +=1
+  def update_board_history(current_guess, feedback)
+    @board_history[guesses_made][0] = current_guess
+    @board_history[guesses_made][1] = feedback
+    @guesses_made += 1
   end
 
 end

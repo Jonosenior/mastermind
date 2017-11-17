@@ -1,4 +1,4 @@
-class Feedback
+class FeedbackCreator
   attr_reader :feedback
 
   def initialize()
@@ -6,27 +6,22 @@ class Feedback
   end
 
   def return_feedback(guess, secret_code)
-    feedback = []
+    puts "Beginning secret code: #{secret_code}"
     guess.each_with_index do |element, index|
       if element == secret_code[index]
-        feedback.push("Y")
+        @feedback.push(2)
         secret_code[index] = "Done"
       elsif secret_code.include?(element)
-        feedback.push("y")
+        @feedback.push(1)
         secret_code[secret_code.index(element)] = "Done"
       else
-        feedback.push("n")
+        @feedback.push(0)
         #secret_code[secret_code.index(element)] = "Done"
       end
     end
-  # print "Secret_code: #{secret_code}\n"
-  # print "Feedback: #{feedback}\n"
-  feedback
-  end
-
-
-  def sort_feedback(feedback)
-
+  print "Secret_code: #{secret_code}\n"
+  print "Feedback: #{feedback}\n"
+  @feedback.sort!.reverse!
   end
 
   def reset
