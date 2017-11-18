@@ -5,7 +5,8 @@ class ComputerGuesser
     reset_guess
     @correct_digits = []
     @guesses_made = 0
-    @possible_digits = (1..8).to_a #.shuffle! will randomise the guessing
+    @possible_digits = (1..8).to_a.shuffle
+    @previous_guesses = []
   end
 
   def make_a_guess
@@ -14,9 +15,14 @@ class ComputerGuesser
     if @correct_digits.length < 4
       4.times {@guess.push(@current_guess)}
     else
-      @correct_digits.shuffle!
       @guess = @correct_digits
+      if (@previous_guesses.include?(@guess)) then @guess.shuffle! end
     end
+      # loop do
+      #   @correct_digits.shuffle!
+      #   if @previous_guesses.include?(@guess) then break end
+      # end
+    @previous_guesses << @guess
     @guess
   end
 

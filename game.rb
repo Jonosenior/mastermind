@@ -11,17 +11,17 @@ class Game
 
   def start_game
     while @board.guesses_made < @board.max_guesses_allowed
-      if is_guess_correct? then win end
-      @board.display_board
-      puts "\n\n"
       @human_guesser ? new_human_guess : new_computer_guess
       retrieve_feedback
-      @board.update_board_history(@guess, @feedback)
-      puts "Solution: #{@solution}"
-      puts "Guess: #{@guess}"
-      print @board.board_history
+      @board.update_board_history(@guess.dup, @feedback)
+      #puts "Solution: #{@solution}"
+      #puts "Guess: #{@guess}"
+      #print @board.board_history
       # puts "Feedback: #{@feedback}"
       #puts "Computerguesser's guesses made: #{@computerguesser.guesses_made}"
+      @board.display_board
+      puts "\n\n"
+      if is_guess_correct? then win end
       if !@human_guesser then computer_guesser_evaluates_feedback end
       @feedback_creator.reset
     end
@@ -79,8 +79,9 @@ class Game
   end
 
   def new_human_guess
+    puts "GUESS #{@board.guesses_made + 1}\n\n"
     puts "OK, now you have to make a guess."
-    puts "Remember: four digits, 1-8, no duplicates.\n"
+    puts "Remember: four digits, 1-8.\n"
     @guess = gets.chomp.split("").map {|x| x.to_i}
     if !is_user_input_legitimate?(@guess)
       puts "Hey! Make a proper guess!"
@@ -89,7 +90,8 @@ class Game
   end
 
   def new_computer_guess
-    puts "The computer is thinking."
+    puts "GUESS #{@board.guesses_made + 1}\n\n"
+    puts "The computer is thinking.\n\n"
     @guess = @computerguesser.make_a_guess
   end
 
@@ -97,18 +99,19 @@ class Game
     return false if !(input.all? {|element| element.class == Fixnum})
     return false if input.length != 4
     return false if !(input.all? {|element| (1..8).include?(element)})
-    return false if input.uniq.length != input.length
+    #return false if input.uniq.length != input.length
     true
   end
 
   def introduce_game
-    puts "MASTERMIND"
-    puts "Welcome to Mastermind.\n\n\n"
-    puts "THE RULES\n"
+    write_title
+    #puts "Welcome to Mastermind.\n\n\n"
+    puts "THE RULES\n\n"
     puts "There are two players: You and the Computer."
     puts "One player chooses a 4-digit code."
-    puts "The other player has 12 turns to guess what it is."
-    puts "You have a choice. Choose:"
+    puts "The other player has 12 turns to guess what it is.\n\n\n"
+    @board.introduce_board
+    puts "GAME TYPE\n\n"
     puts "1: You set the code and the computer guesses"
     puts "2: The computer creates a code and you guess"
   end
@@ -120,10 +123,10 @@ class Game
     when 1
       @human_guesser = false
       @computerguesser = ComputerGuesser.new
-      puts "\n\n\n"
+      puts "\n\n"
     when 2
       @human_guesser = true
-      puts "\n\n\n"
+      puts "\n\n"
     else
       puts "Come on, make a real choice!"
       user_chooses_player_type

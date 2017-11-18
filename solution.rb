@@ -17,6 +17,7 @@ class SolutionCreator
   end
 
   def user_inputs_solution
+    puts "ENTER SECRET CODE\n\n"
     puts "Now you have to choose your 4-digit secret solution.\n"
     puts "This is the code the computer will try and guess.\n"
     puts "Remember - it's four digits, no duplicates, and only the numbers 1-8.\n"

@@ -7,12 +7,12 @@ class FeedbackCreator
   end
 
   def return_feedback(guess)
-    solution = @solution
-    puts "#{solution}"
+    solution = @solution.dup
+    #puts "#{solution}"
     guess.each_with_index do |element, index|
       if element == solution[index]
         @feedback.push(2)
-        solution[index] = "Done"
+        solution[index] = "Done" 
       elsif solution.include?(element)
         @feedback.push(1)
         solution[solution.index(element)] = "Done"
