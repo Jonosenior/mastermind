@@ -1,0 +1,80 @@
+
+CLASSES
+
+Board
+#- Stores game info for each previous guess: (as a 2D array? eg [[1, 1234, Yynn], [2, 1534, Ynnn]])
+  #- Guess number (ie, first guess, second guess etc) - taken from Game
+  #- Guess code (what the user inputted) - taken from Game
+  #- Feedback (from feedback)
+- Puts the game info to the screen
+  #- Should be in reverse-
+  - should be spaced and aligned nicely
+
+
+Feedback
+#- Compares player guess with secret solution
+- Returns a feedback code, sorted so Y > y > n
+
+Player
+#- Stores player name
+-
+
+Secret solution
+#- Creates a secret code (4 digits, random #s 1-8, maybe not repeated) as array
+#- Stores secret code as array called solution
+
+
+Game
+- Starts a new game:
+  - Asks secret solution to create a random solution code and store it
+  #- Asks player for name and explains the rules
+  #- Displays rules to player
+  - Asks board to display_board
+  - Asks player for a guess
+#- Checks if player input is legitimate (all numbers, all bw 1-8)
+#- converts player guess to a usable data type (array, string, integer)
+- Passes player_guess and secret_solution to feedback
+- Tells Board to puts the board
+- explain_rules method
+- ask_player_for_guess method
+- Use a @human_guesser? instance variable in the mastermind class to save lines of code. ie use ternary operators to decide what to do rather than seperate methods for computer and human player
+
+
+
+To be assigned:
+#- Guess # +=1
+#- Checks if we've had max # of guesses (if we have, then game over)
+#- Game Over: puts "sorry you lost, this was the code"
+
+
+TODO
+
+- User chooses if they want to be code-setter or code-getter
+
+CODE-SETTER changes
+- Add what player
+-
+
+
+
+computer turn
+#- Ask computer_guesser to make a guess
+#- Pass guess to solution to see if it's correct
+  #- if so, computer won!
+  #- if not, create feedback
+#- after 12 gos, if the computer hasn't won, display you won to the user.
+
+
+#- pass human v computer to SolutionCreator.new
+
+
+Questions
+- Does computer give feedback to itself, or does human player
+ give feedback to computer?
+- If computer gives feedback, it will need to know WHICH digit
+ of its guesses was Y, which was y and which was n. That means
+ refactoring the feedback code.
+ - Do I need to game classes?
+    1) ComputerGuessesGame
+    2) HumanGuessesGame
+- Is it ok to make $game instance a global var so I can access its method from the solution class?

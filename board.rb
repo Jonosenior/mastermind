@@ -4,11 +4,8 @@ class Board
   attr_accessor :guesses_made
 
   def initialize
-    # @guess_number is the eg first, second, third etc guess made
     @guesses_made = 0
-    # @max_guesses_allowed is the total number of guesses a player has
     @max_guesses_allowed = 12
-    # @board_history is a 2D array which stores: guess_number, player_guess, feedback
     create_board_history
   end
 
@@ -44,7 +41,6 @@ end
 
 
   def update_board_history(guess, feedback)
-    #puts "Update board history, guesses made: #{@guesses_made}"
     @board_history[@guesses_made][0] = guess
     @board_history[@guesses_made][1] = feedback.map {|x| convert_digit_to_colored_block(x)}
     @guesses_made += 1
@@ -61,7 +57,8 @@ end
     print " ■".colorize(:green)
     print " ■".colorize(:red)
     print " ■".colorize(:red)
-    print " ■\n".colorize(:white)
+    print " ■\n\n".colorize(:white)
+    puts "    - #{"BLUE".colorize(:blue)} is for unplayed turns."
     puts "    - #{"GREEN".colorize(:green)} means you have a correct digit in the correct position."
     puts "    - #{"RED".colorize(:red)} means you have a correct digit in the wrong position."
     puts "    - #{"WHITE".colorize(:white)} means a digit is wrong.\n\n\n"

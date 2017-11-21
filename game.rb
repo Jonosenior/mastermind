@@ -14,11 +14,6 @@ class Game
       @human_guesser ? new_human_guess : new_computer_guess
       retrieve_feedback
       @board.update_board_history(@guess.dup, @feedback)
-      #puts "Solution: #{@solution}"
-      #puts "Guess: #{@guess}"
-      #print @board.board_history
-      # puts "Feedback: #{@feedback}"
-      #puts "Computerguesser's guesses made: #{@computerguesser.guesses_made}"
       @board.display_board
       puts "\n\n"
       if is_guess_correct? then win end
@@ -29,8 +24,7 @@ class Game
   end
 
   def computer_guesser_evaluates_feedback
-    @computerguesser.remember_correct_digits(@feedback)
-    #puts "Correct Digits: #{@computerguesser.correct_digits}"
+    @computerguesser.evaluate_feedback(@feedback)
     @computerguesser.iterate_guesses_made
     @computerguesser.reset_guess
   end
@@ -65,7 +59,9 @@ class Game
     if @human_guesser
       puts "Congratulations! You got the correct code."
     else
-      puts "Oh no! The computer guessed your code!\n\n"
+      puts "Oh no! The computer guessed your code!"
+      puts "Your secret code was #{@guess.join("")}, and that's exactly what the Computer guessed."
+      puts "You lose.\n\n"
     end
     play_again
   end
@@ -81,39 +77,38 @@ class Game
   def new_human_guess
     puts "GUESS #{@board.guesses_made + 1}\n\n"
     puts "OK, now you have to make a guess."
-    puts "Remember: four digits, 1-8.\n"
+    puts "Remember: four digits, 1-6.\n"
     @guess = gets.chomp.split("").map {|x| x.to_i}
     if !is_user_input_legitimate?(@guess)
-      puts "Hey! Make a proper guess!"
+      puts "Hey! Make a proper guess!\n\n"
       new_human_guess
     end
   end
 
   def new_computer_guess
     puts "GUESS #{@board.guesses_made + 1}\n\n"
-    puts "The computer is thinking.\n\n"
+    puts "The Computer is thinking."
     @guess = @computerguesser.make_a_guess
+    puts "The Computer guesses: #{@guess.join("")}"
   end
 
   def is_user_input_legitimate?(input)
     return false if !(input.all? {|element| element.class == Fixnum})
     return false if input.length != 4
-    return false if !(input.all? {|element| (1..8).include?(element)})
-    #return false if input.uniq.length != input.length
+    return false if !(input.all? {|element| (1..6).include?(element)})
     true
   end
 
   def introduce_game
     write_title
-    #puts "Welcome to Mastermind.\n\n\n"
     puts "THE RULES\n\n"
     puts "There are two players: You and the Computer."
     puts "One player chooses a 4-digit code."
     puts "The other player has 12 turns to guess what it is.\n\n\n"
     @board.introduce_board
     puts "GAME TYPE\n\n"
-    puts "1: You set the code and the computer guesses"
-    puts "2: The computer creates a code and you guess"
+    puts "1: You're the Codemaker, and the Computer guesses."
+    puts "2: You're the Codebreaker, and the Computer sets the solution."
   end
 
   def user_chooses_player_type
