@@ -1,5 +1,5 @@
 class ComputerGuesser
-  attr_reader :guess, :guesses_made, :correct_digits
+  attr_reader :guess, :guesses_made, :correct_digits, :possible_answers
 
   def initialize
     reset_guess
@@ -8,6 +8,7 @@ class ComputerGuesser
     @possible_digits = (1..6).to_a.shuffle
     #@previous_guesses = []
     @correct_digits_permutated = false
+    @possible_answers = []
   end
 
   # The AI's strategy is first to find the correct digits irrespective of position, and then to order them corretly.

@@ -1,4 +1,3 @@
-#require "./game"
 require File.expand_path("../board", __FILE__)
 require File.expand_path("../feedback", __FILE__)
 require File.expand_path("../solution", __FILE__)
