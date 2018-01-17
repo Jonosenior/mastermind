@@ -1,9 +1,9 @@
-require File.expand_path("../board", __FILE__)
-require File.expand_path("../feedback", __FILE__)
-require File.expand_path("../solution", __FILE__)
-require File.expand_path("../game", __FILE__)
-require File.expand_path("../computerguesser", __FILE__)
-require File.expand_path("../title", __FILE__)
+require File.expand_path("../lib/board", __FILE__)
+require File.expand_path("../lib/feedback", __FILE__)
+require File.expand_path("../lib/solution_with_dups", __FILE__)
+require File.expand_path("../lib/game", __FILE__)
+require File.expand_path("../lib/third_computerguesser", __FILE__)
+require File.expand_path("../lib/title", __FILE__)
 require 'colorize'
 
 
