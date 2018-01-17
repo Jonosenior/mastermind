@@ -1,6 +1,6 @@
 # Mastermind Game
 
-** Note: I'm proud of this game, but it represents an early stage of my coding journey and all the bad practices that go along with that. For example many of the methods are chained together making them impossible to test. For a better coded game, see [my version of chess](https://github.com/Jonosenior/chess). **
+** Note: I'm proud of this game, especially the AI, but it represents an early stage of my coding journey and all the bad practices that go along with that. For example many of the methods are chained together making them impossible to test. For a better-coded game, see [my version of chess](https://github.com/Jonosenior/chess). **
 
 This is a 1-player, command line version of the board game Mastermind.
 
